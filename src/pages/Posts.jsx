@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react"
 import "./posts.scss"
 
 
-import { useGetPostsQuery } from "../redux/postSlice"
+import { useAddPostMutation, useDeletePostMutation, useGetPostsQuery } from "../redux/postSlice"
 
 const Posts = () => {
 
     const {data: posts, isLoading} = useGetPostsQuery()
 
-    const [sum, setSum] = useState(0)
+    let [addPost] = useAddPostMutation()
+    let [deletePost] = useDeletePostMutation()
+
 
     function deletePostHandler(postId){
-        dispatch(deletePost(postId))
-
+        deletePost({postId})
     }
     
 
@@ -20,8 +21,8 @@ const Posts = () => {
         <div>
             <h1>This is H1 tag</h1>
 
-        <button onClick={()=>setSum(sum + 1)} >Inc {sum}</button>
 
+        <button onClick={()=>addPost({id: 234234, title: "Newq Post........."})} >Add Post</button>
 
             { isLoading ? (
                 <div>
@@ -29,6 +30,7 @@ const Posts = () => {
                 </div>
             ) : (
                 <div>
+                    <h4>{posts.length}</h4>
                     {
                         posts?.map(post=>(
                             <div className="post" key={post.id}>
