@@ -1,0 +1,48 @@
+
+:root{
+  --primary: #e50b88;
+  --secondary: #ff4343;
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-300: #d6d3d1;
+  --stone-400: #a8a29e;
+  --stone-500: #78716c;
+  --stone-600: #57534e;
+  --stone-700: #44403c;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
+
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  background-color: #1c1917;
+}
+
+
+
+// common utilities classes
+.text-mute{
+  font-size: 12px;
+  color: var(--stone-400);
+}
+.link{
+  color: var(--primary);
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+    text-decoration-color: var(--primary);
+  }
+}
+.text-underline{text-decoration: underline}
+.text-center{text-align: center}
+.text-end{text-align: end}
+.flex{ display: flex}
+.block{display: block}
+.w-full{width: 100%}
+.mt-10{margin-top: 10px}
+.mt-20{margin-top: 20px}
+.mt-30{margin-top: 30px}
+.mt-40{margin-top: 40px}
+.mt-50{margin-top: 50px}
