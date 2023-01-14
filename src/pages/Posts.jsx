@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from "react"
-import {useDispatch, useSelector} from "react-redux"
 import "./posts.scss"
 
-import {fetchPosts, deletePost} from "../redux/action"
+
+import { useGetPostsQuery } from "../redux/postSlice"
 
 const Posts = () => {
 
-    const {posts} = useSelector(state=>state)
-    const dispatch = useDispatch() 
-
-    useEffect(()=>{
-        dispatch(fetchPosts())
-    }, [])
+    const {data: posts, isLoading} = useGetPostsQuery()
 
     const [sum, setSum] = useState(0)
-
 
     function deletePostHandler(postId){
         dispatch(deletePost(postId))
 
     }
-
-    useEffect(()=>{
-        dispatch(fetchPosts())
-    }, [sum])
-
     
 
     return (
@@ -33,12 +22,24 @@ const Posts = () => {
 
         <button onClick={()=>setSum(sum + 1)} >Inc {sum}</button>
 
-            {  posts?.map(post=>(
-                <div className="post" key={post.id}>
-                    <p className="post-title">{post.title}</p>
-                    <button onClick={()=>deletePostHandler(post.id)}>Delete</button>
+
+            { isLoading ? (
+                <div>
+                    <h1>Posts are fetching...</h1>
                 </div>
-            ))}
+            ) : (
+                <div>
+                    {
+                        posts?.map(post=>(
+                            <div className="post" key={post.id}>
+                                <p className="post-title">{post.title}</p>
+                                <button onClick={()=>deletePostHandler(post.id)}>Delete</button>
+                            </div>
+                        ))
+                    }
+                
+                </div>
+            )}
         </div>
     )
 }
