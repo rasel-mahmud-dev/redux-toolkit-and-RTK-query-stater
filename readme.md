@@ -1,1 +1,1 @@
-Redux RTK query for caching newtwork rquest data
+Redux RTK query for caching newtwork request data

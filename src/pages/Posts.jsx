@@ -1,51 +1,60 @@
-import React, { useEffect, useState } from "react"
-import "./posts.scss"
+import React from "react";
+import "./posts.scss";
 
+import { useDispatch, useSelector } from "react-redux";
 
-import { useAddPostMutation, useDeletePostMutation, useGetPostsQuery } from "../redux/postSlice"
+import {
+    postApi,
+    useAddPostMutation,
+    useDeletePostMutation,
+    useGetPostsQuery,
+} from "../redux/postApi";
 
 const Posts = () => {
+    const { data: posts, isLoading } = useGetPostsQuery();
 
-    const {data: posts, isLoading} = useGetPostsQuery()
+    const [trigger, result, lastPromiseInfo] = postApi.endpoints.getPosts.useLazyQuery({});
 
-    let [addPost] = useAddPostMutation()
-    let [deletePost] = useDeletePostMutation()
+    const dispatch = useDispatch()
 
+    let [addPost] = useAddPostMutation();
+    let [deletePost] = useDeletePostMutation();
 
-    function deletePostHandler(postId){
-        deletePost({postId})
+    function deletePostHandler(postId) {
+        deletePost({ postId });
     }
-    
+
+    async function handleAddPost() {
+        // trigger({}, false);
+        dispatch(addPost())
+    }
+
 
     return (
         <div>
             <h1>This is H1 tag</h1>
 
+            <button onClick={handleAddPost}>Add Post</button>
 
-        <button onClick={()=>addPost({id: 234234, title: "Newq Post........."})} >Add Post</button>
-
-            { isLoading ? (
+            {isLoading ? (
                 <div>
                     <h1>Posts are fetching...</h1>
                 </div>
             ) : (
                 <div>
-                    <h4>{posts.length}</h4>
-                    {
-                        posts?.map(post=>(
-                            <div className="post" key={post.id}>
-                                <p className="post-title">{post.title}</p>
-                                <button onClick={()=>deletePostHandler(post.id)}>Delete</button>
-                            </div>
-                        ))
-                    }
-                
+                    {posts?.map((post) => (
+                        <div className="post" key={post.id}>
+                            <p className="post-title">{post.title}</p>
+                            <button onClick={() => deletePostHandler(post.id)}>
+                                Delete
+                            </button>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>
-    )
-}
-
+    );
+};
 
 
 export default Posts
