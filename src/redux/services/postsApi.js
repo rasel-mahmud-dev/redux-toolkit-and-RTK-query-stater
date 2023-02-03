@@ -1,10 +1,29 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import apis from "src/apis";
 
-const baseUrl = "https://jsonplaceholder.typicode.com";
+// for Custom RTK
+const axiosBaseQuery = () => {
+    return async ({url, method, data, params}) => {
+        try {
+            const result = await apis({url: url, method, data, params})
+            return {data: result.data}
+        } catch (axiosError) {
+            let err = axiosError
+            return {
+                error: {
+                    status: err.response?.status,
+                    data: err.response?.data || err.message,
+                },
+            }
+        }
+    }
+}
+
+
 
 export const postApi = createApi({
     reducerPath: "postsApi",
-    baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
+    baseQuery: axiosBaseQuery(),
     tagTypes: ["postsApi"],
     endpoints: (builder) => ({
         getPosts: builder.query({

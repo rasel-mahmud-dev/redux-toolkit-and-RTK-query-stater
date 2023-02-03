@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit"
-import { postsSlice } from "./postsSlice"
-import {postApi} from "./postApi"
+import { postsSlice } from "./slices/postsSlice"
+import {postApi} from "./services/postsApi"
 
 
  const store = configureStore({

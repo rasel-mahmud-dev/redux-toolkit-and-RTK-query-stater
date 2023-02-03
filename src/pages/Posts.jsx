@@ -8,7 +8,7 @@ import {
     useAddPostMutation,
     useDeletePostMutation,
     useGetPostsQuery,
-} from "../redux/postApi";
+} from "../redux/services/postsApi";
 
 const Posts = () => {
     const { data: posts, isLoading } = useGetPostsQuery();
